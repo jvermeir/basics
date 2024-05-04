@@ -11,25 +11,22 @@ import scala.concurrent.Future
 object CustomerService {
   var customers = scala.collection.mutable.Map[Long, Customer]()
 
-  final case class Customer(id: Long ,name: String, email: String)
+  final case class Customer(id: Option[String] ,name: String, email: String)
 
   implicit val customerFormat: RootJsonFormat[Customer] = jsonFormat3(Customer.apply)
 
   def findCustomerById(id: Long): Future[Option[Customer]] = Future {
-//    customers.get(id)
     CustomerRepository.find(id)
   }
 
   def getCustomers(): Future[List[Customer]] = Future {
-//    customers.values.toList
     CustomerRepository.findAll()
   }
 
-  def addCustomer(customer: Customer): Future[Done] = {
-//    customers.addOne(customer.id, customer)
-    CustomerRepository.save(customer)
+  def addCustomer(customer: Customer): Future[Customer] = {
+    val newCustomer = CustomerRepository.save(customer)
     Future {
-      Done
+      newCustomer
     }
   }
 }

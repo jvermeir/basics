@@ -9,28 +9,27 @@ object CustomerRepository {
   Class.forName("org.h2.Driver")
   ConnectionPool.singleton("jdbc:h2:mem:hello", "user", "pass")
 
-  // ad-hoc session provider on the REPL
   implicit val session = AutoSession
 
   sql"""
 create table customers (
-id serial not null primary key,
+id uuid not null primary key,
 name varchar(64),
 email varchar(64)
 )
 """.execute.apply()
-
+  
   object Customer extends SQLSyntaxSupport[Customer] {
     override val tableName = "customers"
 
     def apply(rs: WrappedResultSet) = new Customer(
-      rs.long("id"), rs.string("name"), rs.string("email"))
+      Some(rs.string("id")), rs.string("name"), rs.string("email"))
   }
 
-  // TODO: allow empty id so we can generate a new one
   def save(customer: Customer): Customer = {
-    sql"insert into customers (id, name, email) values (${customer.id}, ${customer.name}, ${customer.email})".update.apply()
-    customer
+    val newCustomer = customer.copy(id = Some(customer.id.getOrElse(java.util.UUID.randomUUID.toString)))
+    sql"insert into customers (id, name, email) values (${newCustomer.id}, ${newCustomer.name}, ${newCustomer.email})".update.apply()
+    newCustomer
   }
 
   def find(id: Long): Option[Customer] = {

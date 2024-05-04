@@ -48,9 +48,9 @@ object CustomerController {
     post {
       path("create-customer") {
         entity(as[Customer]) { customer =>
-          val saved: Future[Done] = addCustomer(customer)
+          val saved= addCustomer(customer)
           onSuccess(saved) { _ =>
-            complete("customer created")
+            complete(saved)
           }
         }
       }
