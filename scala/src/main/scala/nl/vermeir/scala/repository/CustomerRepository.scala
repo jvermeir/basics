@@ -3,43 +3,37 @@ package nl.vermeir.scala.repository
 import nl.vermeir.scala.service.CustomerService.Customer
 import scalikejdbc._
 
+import java.util.UUID
+
 object CustomerRepository {
 
-  // TODO: use property so we can test
-  Class.forName("org.h2.Driver")
-  ConnectionPool.singleton("jdbc:h2:mem:hello", "user", "pass")
+  private val TABLE_NAME = "CUSTOMER"
 
-  implicit val session = AutoSession
+  scalikejdbc.config.DBs.setupAll()
 
-  sql"""
-create table customers (
-id uuid not null primary key,
-name varchar(64),
-email varchar(64)
-)
-""".execute.apply()
-  
+  implicit val session: AutoSession.type = AutoSession
+
   object Customer extends SQLSyntaxSupport[Customer] {
-    override val tableName = "customers"
-
     def apply(rs: WrappedResultSet) = new Customer(
-      Some(rs.string("id")), rs.string("name"), rs.string("email"))
+      Some(UUID.fromString(rs.string("id"))), rs.string("name"), rs.string("email"))
+
+    def apply(id: Option[UUID], name: String, email: String) = new Customer(id, name, email)
   }
 
   def save(customer: Customer): Customer = {
-    val newCustomer = customer.copy(id = Some(customer.id.getOrElse(java.util.UUID.randomUUID.toString)))
-    sql"insert into customers (id, name, email) values (${newCustomer.id}, ${newCustomer.name}, ${newCustomer.email})".update.apply()
-    newCustomer
+    val id = customer.id.getOrElse(java.util.UUID.randomUUID).toString
+    sql"insert into $TABLE_NAME (id, name, email) values ($id, ${customer.name}, ${customer.email})".update.apply()
+    Customer(Option(UUID.fromString(id)), customer.name, customer.email)
   }
 
-  def find(id: Long): Option[Customer] = {
+  def find(id: UUID): Option[Customer] = {
     val customer = Customer.syntax("c")
     withSQL {
-      select.from(Customer as customer).where.eq(customer.id, id)
+      select.from(Customer as customer).where.eq(customer.id, id.toString)
     }.map(rs => Customer(rs)).single.apply()
   }
 
   def findAll(): List[Customer] = {
-    sql"select * from customers".map(rs => Customer(rs)).list.apply()
+    sql"select * from $TABLE_NAME".map(rs => Customer(rs)).list.apply()
   }
 }
