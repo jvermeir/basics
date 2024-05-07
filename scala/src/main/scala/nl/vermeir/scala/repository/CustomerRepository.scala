@@ -7,8 +7,6 @@ import java.util.UUID
 
 object CustomerRepository {
 
-  private val TABLE_NAME = "CUSTOMER"
-
   scalikejdbc.config.DBs.setupAll()
 
   implicit val session: AutoSession.type = AutoSession
@@ -22,7 +20,7 @@ object CustomerRepository {
 
   def save(customer: Customer): Customer = {
     val id = customer.id.getOrElse(java.util.UUID.randomUUID).toString
-    sql"insert into $TABLE_NAME (id, name, email) values ($id, ${customer.name}, ${customer.email})".update.apply()
+    sql"insert into customer (id, name, email) values ($id, ${customer.name}, ${customer.email})".update.apply()
     Customer(Option(UUID.fromString(id)), customer.name, customer.email)
   }
 
@@ -34,6 +32,6 @@ object CustomerRepository {
   }
 
   def findAll(): List[Customer] = {
-    sql"select * from $TABLE_NAME".map(rs => Customer(rs)).list.apply()
+    sql"select * from customer".map(rs => Customer(rs)).list.apply()
   }
 }

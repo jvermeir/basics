@@ -25,16 +25,14 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion,
   "mysql" % "mysql-connector-java" % "8.0.33",
+  "org.scalikejdbc" %% "scalikejdbc" % "4.2.1",
+  "org.scalikejdbc" %% "scalikejdbc-config" % "4.2.1",
 
-
+  "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion,
+  "com.typesafe.akka" %% "akka-http-testkit" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
   "org.scalatestplus" %% "mockito-3-4" % "3.2.10.0" % "test",
   "org.scalatest" %% "scalatest-funsuite" % "3.2.18" % "test",
-  "org.mockito" % "mockito-all" % "1.8.4"
-)
-
-libraryDependencies ++= Seq(
-  "org.scalikejdbc" %% "scalikejdbc" % "4.2.1",
-  "org.scalikejdbc" %% "scalikejdbc-config" % "4.2.1",
+  "org.scalatest" %% "scalatest" % "3.2.18" % "test",
   "com.h2database" % "h2" % "1.4.200"
 )

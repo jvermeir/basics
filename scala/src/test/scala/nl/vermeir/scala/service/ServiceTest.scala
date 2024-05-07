@@ -1,8 +1,7 @@
-package nl.vermeir.scala
+package nl.vermeir.scala.service
 
-import nl.vermeir.scala.Fixture.{drop, recreate}
-import nl.vermeir.scala.service.CustomerService
 import nl.vermeir.scala.service.CustomerService.Customer
+import nl.vermeir.scala.Fixture.{drop, recreate}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funsuite.AnyFunSuite
 

@@ -20,7 +20,8 @@ object CustomerController {
       case _ => deserializationError("Expected hexadecimal UUID string")
     }
   }
-    implicit val customerFormat: RootJsonFormat[Customer] = jsonFormat3(Customer.apply)
+
+  implicit val customerFormat: RootJsonFormat[Customer] = jsonFormat3(Customer.apply)
 
   val route: Route =
     concat(
@@ -46,6 +47,7 @@ object CustomerController {
     get {
       pathPrefix("customer" / JavaUUID) { id =>
         val maybeCustomer = findCustomerById(id)
+
         onSuccess(maybeCustomer) {
           case Some(customer) => complete(customer)
           case None => complete(StatusCodes.NotFound)
