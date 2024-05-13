@@ -1,0 +1,32 @@
+syntax = "proto3";
+package nl.vermeir.scala.grpc;
+
+message GetCustomerByIdRequest {
+  string id = 1;
+}
+
+message GetCustomerByIdResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message ListCustomerRequest {}
+message ListCustomerResponse {
+  repeated GetCustomerByIdResponse customers = 1;
+}
+
+message CreateCustomerRequest {
+  string name = 1;
+  string email = 2;
+}
+
+service CustomerService {
+  rpc GetCustomerById (GetCustomerByIdRequest)
+      returns (GetCustomerByIdResponse) {}
+  rpc ListCustomers(ListCustomerRequest)
+      returns (ListCustomerResponse){}
+  rpc CreateCustomer(CreateCustomerRequest)
+      returns (GetCustomerByIdResponse) {}
+}
+

@@ -25,10 +25,7 @@ object CustomerRepository {
   }
 
   def find(id: UUID): Option[Customer] = {
-    val customer = Customer.syntax("c")
-    withSQL {
-      select.from(Customer as customer).where.eq(customer.id, id.toString)
-    }.map(rs => Customer(rs)).single.apply()
+      sql"select * from customer where id = ${id.toString}".map(rs => Customer(rs)).single.apply()
   }
 
   def findAll(): List[Customer] = {
