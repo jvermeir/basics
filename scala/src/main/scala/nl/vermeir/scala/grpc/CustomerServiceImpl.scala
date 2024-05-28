@@ -39,32 +39,3 @@ class CustomerServiceImpl extends CustomerService {
     ))
   }
 }
-
-/*
-grpcurl -d '{"name": "foo"}' -plaintext \
-    -import-path ~/dev/basics/scala/src/main/protobuf \
-    -proto ticker.proto \
-    localhost:8090 ticker.TickerService.MonitorSymbol
-    nl.vermeir.scala.grpc
-
-grpcurl -d '{"name": "foo"}' -plaintext \
-    -import-path /home/aengelen/dev/akka-grpc-intro-video/src/main/protobuf  \
-    -proto ticker.proto \
-   localhost:8080 ticker.TickerService.MonitorSymbol
-
-grpcurl -d '{"id": "562efef1-b78e-4db2-875b-a014facbf0d4"}' -plaintext \
-    -import-path ~/dev/basics/scala/src/main/protobuf \
-        -proto customer.proto \
-            localhost:8090 nl.vermeir.scala.grpc.CustomerService.GetCustomerById
-
-grpcurl -d '{"name": "name1", "email":"email1"}' -plaintext \
-    -import-path ~/dev/basics/scala/src/main/protobuf \
-        -proto customer.proto \
-            localhost:8090 nl.vermeir.scala.grpc.CustomerService.CreateCustomer
-
-grpcurl -d '{}' -plaintext \
-    -import-path ~/dev/basics/scala/src/main/protobuf \
-        -proto customer.proto \
-            localhost:8090 nl.vermeir.scala.grpc.CustomerService.ListCustomers
-
- */
