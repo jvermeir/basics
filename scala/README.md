@@ -10,25 +10,7 @@ sbt compile
 
 ## Test REST interface
 
-Add a customer
-
-```bash
-curl -v -d '{"name":"i1", "email": "a@com"}' \
--H 'Content-Type: application/json' \
--X POST localhost:8080/customers
-```
-
-Retrieve a customer by UUID
-
-```bash
-curl -v localhost:8080/customers/4303cdaa-1504-4271-a614-1106daa2e83
-```
-
-List all customers
-
-```bash 
-curl -v localhost:8080/customers/
-```
+see [../README.md](../README.md)
 
 ## Test gRPC 
 
