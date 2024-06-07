@@ -31,13 +31,16 @@ object CustomerController {
     )
 
   private def getAllCustomers = {
-    get {
-      path("all") {
+    path("customers") {
+      get {
         val maybeCustomers: Future[List[Customer]] = getCustomers
 
         onSuccess(maybeCustomers) {
           case customers: List[Customer] => complete(customers)
-          case _ => complete(StatusCodes.NotFound)
+          case x => {
+            println(x)
+            complete(StatusCodes.NotFound)
+          }
         }
       }
     }
@@ -45,7 +48,7 @@ object CustomerController {
 
   private def getCustomerById = {
     get {
-      pathPrefix("customer" / JavaUUID) { id =>
+      pathPrefix("customers" / JavaUUID) { id =>
         val maybeCustomer = findCustomerById(id)
 
         onSuccess(maybeCustomer) {
@@ -57,10 +60,10 @@ object CustomerController {
   }
 
   private def newCustomer = {
-    post {
-      path("create-customer") {
+    path("customers") {
+      post {
         entity(as[Customer]) { customer =>
-          val saved= addCustomer(customer)
+          val saved = addCustomer(customer)
           onSuccess(saved) { _ =>
             complete(saved)
           }

@@ -42,7 +42,7 @@ class CustomerControllerTest extends AnyWordSpec with Matchers with ScalatestRou
   )
   private val createCustomerRequest = HttpRequest(
     HttpMethods.POST,
-    uri = "/create-customer",
+    uri = "/customers",
     entity = HttpEntity(MediaTypes.`application/json`, createCustomerRequestBody))
 
   "Customer controller" should {
@@ -63,7 +63,7 @@ class CustomerControllerTest extends AnyWordSpec with Matchers with ScalatestRou
         status.isSuccess() shouldEqual true
       }
 
-      Get("/all") ~> route ~> check {
+      Get("/customers") ~> route ~> check {
         status.isSuccess() shouldEqual true
         val customerList = responseAs[String].parseJson.convertTo[List[Customer]]
         customerList.size shouldEqual 1
@@ -76,7 +76,7 @@ class CustomerControllerTest extends AnyWordSpec with Matchers with ScalatestRou
         parseCustomerFromResponse(responseAs[String])
       }
 
-      Get(s"/customer/${newCustomer.id.get.toString}") ~> route ~> check {
+      Get(s"/customers/${newCustomer.id.get.toString}") ~> route ~> check {
         status.isSuccess() shouldEqual true
         val customer = parseCustomerFromResponse(responseAs[String])
         customer.name shouldEqual newCustomer.name
