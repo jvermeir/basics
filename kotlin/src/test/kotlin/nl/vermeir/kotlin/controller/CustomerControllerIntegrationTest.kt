@@ -28,7 +28,7 @@ class CustomerControllerIntegrationTest {
     private fun saveSampleCustomer(): Customer {
         val response = mvc.perform(
             MockMvcRequestBuilders
-                .post("/customer/")
+                .post("/customers/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"John\",\"email\":\"test@test.com\"}")
         )
@@ -44,7 +44,7 @@ class CustomerControllerIntegrationTest {
         saveSampleCustomer()
         mvc.perform(
             MockMvcRequestBuilders
-                .get("/customer/all")
+                .get("/customers/")
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -57,7 +57,7 @@ class CustomerControllerIntegrationTest {
         val (id) = saveSampleCustomer()
         mvc.perform(
             MockMvcRequestBuilders
-                .get("/customer/$id")
+                .get("/customers/$id")
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isOk())

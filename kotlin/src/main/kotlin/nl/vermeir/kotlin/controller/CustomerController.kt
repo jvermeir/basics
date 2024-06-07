@@ -15,10 +15,10 @@ data class Customer(@Id
                     val email: String?)
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 class CustomerController (val service: CustomerService) {
 
-    @GetMapping("/all")
+    @GetMapping("/")
     fun all() = service.findCustomers()
 
     @GetMapping("/{id}")
