@@ -37,10 +37,7 @@ object CustomerController {
 
         onSuccess(maybeCustomers) {
           case customers: List[Customer] => complete(customers)
-          case x => {
-            println(x)
-            complete(StatusCodes.NotFound)
-          }
+          case _ => complete(StatusCodes.NotFound)
         }
       }
     }
