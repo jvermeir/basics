@@ -26,7 +26,7 @@ public class CustomerControllerIntegrationTest {
 
     private Customer saveSampleCustomer() throws Exception {
         ResultActions resultActions = mvc.perform(MockMvcRequestBuilders
-                        .post("/customer")
+                        .post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\":\"John\",\"email\":\"test@test.com\"}"))
                 .andDo(print())
@@ -39,7 +39,7 @@ public class CustomerControllerIntegrationTest {
         saveSampleCustomer();
 
         mvc.perform(MockMvcRequestBuilders
-                        .get("/customer/all")
+                        .get("/customers/")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].name").value("John"))
@@ -51,7 +51,7 @@ public class CustomerControllerIntegrationTest {
         Customer customer = saveSampleCustomer();
 
         mvc.perform(MockMvcRequestBuilders
-                        .get("/customer/" + customer.getId())
+                        .get("/customers/" + customer.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("John"))

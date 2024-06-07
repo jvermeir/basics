@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(path="/customer")
+@RequestMapping(path="/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -17,8 +17,8 @@ public class CustomerController {
     }
 
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<Customer> getAllUsers() {
+    @GetMapping(path="/")
+    public @ResponseBody Iterable<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
