@@ -2,11 +2,16 @@ package nl.vermeir.java.controller;
 
 import nl.vermeir.java.model.Customer;
 import nl.vermeir.java.service.CustomerService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.Set;
 
+@CrossOrigin
 @Controller
 @RequestMapping(path="/customers")
 public class CustomerController {
@@ -17,7 +22,7 @@ public class CustomerController {
     }
 
 
-    @GetMapping(path="/")
+    @GetMapping()
     public @ResponseBody Iterable<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
@@ -30,5 +35,15 @@ public class CustomerController {
     @PostMapping
     public @ResponseBody Customer addNewCustomer(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
+    }
+
+    @PutMapping
+    public @ResponseBody Customer updateCustomer(@RequestBody Customer customer) {
+        return customerService.updateCustomer(customer);
+    }
+
+    @DeleteMapping("/{id}")
+    public @ResponseBody void deleteCustomer(@PathVariable String id) {
+        customerService.deleteCustomer(id);
     }
 }

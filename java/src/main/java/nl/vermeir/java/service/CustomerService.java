@@ -26,4 +26,11 @@ public class CustomerService {
         return customerRepository.findById(id);
     }
 
+    public void deleteCustomer(String id) {
+        customerRepository.deleteById(id);
+    }
+
+    public Customer updateCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
 }
