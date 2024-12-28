@@ -15,10 +15,11 @@ data class Customer(@Id
                     val email: String?)
 
 @RestController
+@CrossOrigin
 @RequestMapping("/customers")
 class CustomerController (val service: CustomerService) {
 
-    @GetMapping("/")
+    @GetMapping()
     fun all() = service.findCustomers()
 
     @GetMapping("/{id}")
@@ -28,4 +29,17 @@ class CustomerController (val service: CustomerService) {
     @PostMapping("/")
     fun post(@RequestBody customer: Customer) =
         service.save(customer)
+
+    @PutMapping
+    @ResponseBody
+    fun updateCustomer(@RequestBody customer: Customer): Customer {
+        return service.updateCustomer(customer)
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    fun deleteCustomer(@PathVariable id: String) {
+        service.deleteCustomer(id)
+    }
+
 }

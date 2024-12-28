@@ -13,7 +13,9 @@ see https://spring.io/guides/gs/accessing-data-mysql
 create database for demo:
 
 ```
-docker exec -it some-mysql bash
+docker-compose up
+
+docker exec -it mysql bash
 
 mysql --password
 # password = my-secret-pw
@@ -37,17 +39,17 @@ Save a customer
 ```bash
 curl -v -d '{"name":"i1", "email": "a@com"}' \
 -H 'Content-Type: application/json' \
--X POST localhost:8080/customers
+-X POST localhost:8080/api/customers
 ```
 
 Get customer by id
 ```bash
-curl -v localhost:8080/customers/4303cdaa-1504-4271-a614-1106daa2e83
+curl -v localhost:8080/api/customers/4303cdaa-1504-4271-a614-1106daa2e83
 ```
 
 List all customers
 ```bash 
-curl -v localhost:8080/customers/
+curl -v localhost:8080/api/customers
 ```
 
 Note: the Kotlin version currently requires a trailing / when POSTing a new customer.

@@ -3,6 +3,7 @@ package nl.vermeir.java.service;
 import nl.vermeir.java.model.Customer;
 import nl.vermeir.java.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 

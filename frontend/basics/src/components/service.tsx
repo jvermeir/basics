@@ -1,3 +1,5 @@
+const baseUrl = process.env.BASE_URL || 'http://localhost:8080';
+
 export interface CustomerData {
     id: string;
     name: string;
@@ -14,7 +16,6 @@ export interface AddCustomerRequest {
     name: string;
     email: string;
 }
-export const baseUrl = 'http://localhost:8080';
 
 export const createCustomer = (req: AddCustomerRequest) => {
     return fetch(`${baseUrl}/api/customers`, {

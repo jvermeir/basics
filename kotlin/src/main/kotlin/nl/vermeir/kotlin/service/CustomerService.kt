@@ -14,6 +14,14 @@ class CustomerService(val db: CustomerRepository) {
 
     fun save(customer: Customer) = db.save(customer)
 
+    fun deleteCustomer(id: String) {
+        db.deleteById(id)
+    }
+
+    fun updateCustomer(customer: Customer): Customer {
+        return db.save(customer)
+    }
+
     fun <T : Any> Optional<out T>.toList(): List<T> =
         if (isPresent) listOf(get()) else emptyList()
 }
