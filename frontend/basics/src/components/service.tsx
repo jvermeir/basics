@@ -56,3 +56,8 @@ export const updateCustomer = (req: EditCustomerRequest) => {
     });
 };
 
+export const deleteCustomer = (id: string) => {
+    return fetch(`${baseUrl}/api/customers/${id}`, {
+        method: 'DELETE',
+    });
+};

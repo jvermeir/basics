@@ -13,7 +13,7 @@ import {
 import { Edit } from 'react-feather';
 import React, { useState } from 'react';
 import { HttpError } from '../error/error';
-import { CustomerData, createCustomer, updateCustomer } from '../service';
+import { CustomerData, updateCustomer } from '../service';
 
 export interface EditCustomerProps {
   customer: CustomerData;

@@ -34,17 +34,17 @@ export const CustomersPage = () => {
         {!error && loading && <Loading />}
         {error && !loading && (
           <Typography color="textPrimary" mt={3}>
-            Error while loading categories.
+            Error while loading customers.
           </Typography>
         )}
         {!error && !loading && (
           <>
             <Typography color="textPrimary" variant="h2" mt={6} mb={2}>
-              Categories
+              Customers
               <AddCustomer onCompleted={refetch} />
             </Typography>
             {(!customers || customers?.length === 0) && (
-              <Typography color="textPrimary">No categories, yet.</Typography>
+              <Typography color="textPrimary">No customers, yet.</Typography>
             )}
             {customers && customers.length > 0 && (
               <TableContainer component={Paper}>

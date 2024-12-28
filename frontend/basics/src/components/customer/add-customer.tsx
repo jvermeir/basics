@@ -18,8 +18,6 @@ export interface AddCategoryProps {
   onCompleted: () => void;
 }
 
-// TODO: why does this form show previous values? unless set to empty/0 explicitly
-
 export const AddCustomer = ({ onCompleted }: AddCategoryProps) => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
