@@ -14,11 +14,11 @@ import { Plus } from 'react-feather';
 import { HttpError } from '../error/error';
 import { createCustomer } from '../service';
 
-export interface AddCategoryProps {
+export interface AddCustomerProps {
   onCompleted: () => void;
 }
 
-export const AddCustomer = ({ onCompleted }: AddCategoryProps) => {
+export const AddCustomer = ({ onCompleted }: AddCustomerProps) => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ export const AddCustomer = ({ onCompleted }: AddCategoryProps) => {
 
   const handleError = (error: HttpError) =>
     error.code === 409
-      ? setError('Duplicate customer name')
+      ? setError('Duplicate customer name or email')
       : setError(`${error.code}: ${error.message}`);
 
   const checkResponse = (response: Response) => {
@@ -74,7 +74,7 @@ export const AddCustomer = ({ onCompleted }: AddCategoryProps) => {
         onClick={() => setOpen(true)}
         startIcon={<Plus />}
       >
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Add Category</Box>
+        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Add Customer</Box>
       </Button>
 
       <Dialog

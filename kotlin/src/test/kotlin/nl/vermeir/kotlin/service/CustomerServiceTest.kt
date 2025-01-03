@@ -27,7 +27,7 @@ class CustomerServiceTest() {
         every { customerRepository.save(customer) } returns customer
 
         // when
-        val savedCustomer: Customer = customerService.save(customer)
+        val savedCustomer: Customer = customerService.saveCustomer(customer)
 
         // then
         assertThat(savedCustomer).isEqualTo(customer)

@@ -1,45 +1,55 @@
 package nl.vermeir.kotlin.controller
 
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import nl.vermeir.kotlin.service.CustomerService
 import org.springframework.web.bind.annotation.*
 
-@Table
+@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["name"])])
 @jakarta.persistence.Entity
-data class Customer(@Id
-                    @GeneratedValue(strategy = GenerationType.UUID) var id: String?,
-                    val name: String,
-                    val email: String?)
+data class Customer(
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID) var id: String?,
+    @Column(nullable = false, unique = true)
+    val name: String,
+    val email: String?
+)
 
 @RestController
 @CrossOrigin
 @RequestMapping("/customers")
-class CustomerController (val service: CustomerService) {
+class CustomerController(val service: CustomerService) {
 
-    @GetMapping()
-    fun all() = service.findCustomers()
+    val logger = org.slf4j.LoggerFactory.getLogger(CustomerController::class.java)
+
+    @GetMapping
+    fun all(): List<Customer> {
+        logger.info("all customers")
+        return service.findCustomers()
+    }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: String): Customer =
-        service.findCustomerById(id)
+    fun findById(@PathVariable id: String): Customer {
+        logger.info("find customer by id: $id")
+        return service.findCustomerById(id)
+    }
 
-    @PostMapping("/")
-    fun post(@RequestBody customer: Customer) =
-        service.save(customer)
+    @PostMapping
+    fun post(@RequestBody customer: Customer): Customer {
+        logger.info("post customer $customer")
+        return service.saveCustomer(customer)
+    }
 
     @PutMapping
     @ResponseBody
     fun updateCustomer(@RequestBody customer: Customer): Customer {
-        return service.updateCustomer(customer)
+        logger.info("put customer ${customer.id}")
+        return service.saveCustomer(customer)
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
     fun deleteCustomer(@PathVariable id: String) {
+        logger.info("delete customer $id")
         service.deleteCustomer(id)
     }
-
 }

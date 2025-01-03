@@ -39,7 +39,7 @@ public class CustomerControllerIntegrationTest {
         saveSampleCustomer();
 
         mvc.perform(MockMvcRequestBuilders
-                        .get("/customers/")
+                        .get("/customers")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].name").value("John"))

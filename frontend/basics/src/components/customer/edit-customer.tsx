@@ -30,7 +30,7 @@ export const EditCustomer = ({ customer, onCompleted }: EditCustomerProps) => {
 
   const handleError = (error: HttpError) =>
     error.code === 409
-      ? setError('Duplicate customer name')
+      ? setError('Duplicate customer name or email')
       : setError(`${error.code}: ${error.message}`);
 
   const checkResponse = (response: Response) => {

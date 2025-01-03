@@ -18,7 +18,7 @@ export interface AddCustomerRequest {
 }
 
 export const createCustomer = (req: AddCustomerRequest) => {
-    return fetch(`${baseUrl}/api/customers`, {
+    return fetch(`/api/customers`, {
         method: 'POST',
         headers: {
             'Access-Control-Request-Method': 'POST',
@@ -35,7 +35,12 @@ export function getCustomers(
 ): void {
     if (setLoading) setLoading(true);
 
-    fetch(`${baseUrl}/api/customers`)
+    fetch(`/api/customers`,
+        {
+            headers: {
+                "accepts": "application/json"
+            }
+        })
         .then((_) => _.json())
         .then((customers) => {
             setCategories(customers);
@@ -47,7 +52,7 @@ export function getCustomers(
 }
 
 export const updateCustomer = (req: EditCustomerRequest) => {
-    return fetch(`${baseUrl}/api/customers`, {
+    return fetch(`/api/customers`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -57,7 +62,7 @@ export const updateCustomer = (req: EditCustomerRequest) => {
 };
 
 export const deleteCustomer = (id: string) => {
-    return fetch(`${baseUrl}/api/customers/${id}`, {
+    return fetch(`/api/customers/${id}`, {
         method: 'DELETE',
     });
 };

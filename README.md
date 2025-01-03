@@ -23,6 +23,11 @@ mysql --password
 create database db_example;
 create user 'springuser'@'%' identified by 'ThePassword';
 grant all on db_example.* to 'springuser'@'%';
+
+# create table
+
+use db_example
+# copy and past contents of src/main/resources/schema.sql
 ```
 
 ## Test
@@ -31,9 +36,10 @@ The implementation in each language offers the following endpoints:
 
 | Endpoint            | Description                |
 |---------------------|----------------------------|
-| GET /customers/all  | Json list of all customers |
+| GET /customers      | Json list of all customers |
 | GET /customers/{id} | Query customer by uuid     |
 | POST /customers     | Save a new customer        |
+| PUT /customers      | Update a customer          |
 
 Save a customer
 ```bash
@@ -60,5 +66,27 @@ The actuator works for Java and Kotlin and shows documentation for each endpoint
 ```
 curl http://localhost:8080/api/actuator/mappings
 # endpoints, add /api to get the full url
-curl http://localhost:8080/api/actuator/mappings |jq | grep predicate
+curl http://localhost:8080/api/actuator/mappings | jq | grep predicate
 ```
+
+## Front end
+
+`frontend/basics` is a small website implementing basic CRUD functions to manipulate the data in the customer table, 
+using one of the backend services. 
+
+Start the front end:
+
+```
+npm run build && npm run server
+```
+
+Access the user interface
+
+```
+http://localhost:8081/
+```
+
+## TODO
+
+- show error better message when unique constraint is violated
+- flyway?
